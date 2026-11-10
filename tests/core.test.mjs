@@ -198,3 +198,41 @@ test('snacks are not judged against a full meal target', () => {
   assert.equal(out.length, 1);
   assert.ok(out[0].why.every((w) => !/target/.test(w)));
 });
+
+test('each ingredient is priced for the amount used, per serve and for the batch', () => {
+  const v = C.viewRecipe(recipe(), { perServe: { 0: 100 } }, cat);
+  const ch = cat.get('chicken_breast');
+  const coles = v.items[0].offers.find((o) => o.id === 'coles');
+  assert.ok(Math.abs(coles.perServe - (100 / ch.pack) * ch.prices.coles) < 1e-9);
+  assert.ok(Math.abs(coles.total - (400 / ch.pack) * ch.prices.coles) < 1e-9);
+  assert.equal(coles.pack, ch.prices.coles);
+});
+
+test('ingredient prices add back up to the recipe price', () => {
+  const v = C.viewRecipe(recipe(), {}, cat);
+  for (const s of v.stores) {
+    const sum = v.items.reduce((n, it) => n + (it.q != null && it.offers ? it.offers.find((o) => o.id === s.id).total : 0), 0);
+    assert.ok(Math.abs(sum - s.total) < 1e-9, s.id);
+  }
+});
+
+test('an item a store does not carry has no price rather than zero', () => {
+  const r = recipe({ items: [{ text: 'x', name: 'x', ing: 'turkey_mince', q: 400, unit: 'g', g: 400, optional: false }] });
+  assert.equal(C.viewRecipe(r, {}, cat).items[0].offers.find((o) => o.id === 'aldi').perServe, null);
+});
+
+test('amounts read naturally', () => {
+  assert.equal(C.fmtAmount(0.25, 'each'), '¼');
+  assert.equal(C.fmtAmount(1.5, 'tbsp'), '1½');
+  assert.equal(C.fmtAmount(0.125, 'tbsp'), '⅛');
+  assert.equal(C.fmtAmount(0.5, 'g'), '0.5');
+  assert.equal(C.fmtAmount(150, 'g'), '150');
+  assert.equal(C.audSmall(0.004), '<1c');
+  assert.equal(C.audSmall(null), '–');
+});
+
+test('store links search for the item', () => {
+  assert.match(C.storeLink('coles', 'chicken breast'), /coles\.com\.au.*chicken%20breast/);
+  assert.match(C.storeLink('woolies', 'eggs'), /woolworths\.com\.au.*eggs/);
+  assert.match(C.storeLink('aldi', 'eggs'), /aldi\.com\.au.*eggs/);
+});

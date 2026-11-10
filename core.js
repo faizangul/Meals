@@ -51,6 +51,11 @@ export function viewRecipe(recipe, adj = {}, cat, overrides = {}) {
     }
     const totalG = g1 * servings;
     const q = it.q == null ? null : (it.q / base) * ratio * servings;
+    // What the amount used costs at each store, as a share of the pack.
+    const offers = ing && it.q != null ? STORES.map((s) => {
+      const p = priceOf(ing, s.id, overrides);
+      return { id: s.id, name: s.name, pack: p?.price ?? null, own: !!p?.own, perServe: p ? (g1 / ing.pack) * p.price : null, total: p ? (totalG / ing.pack) * p.price : null };
+    }) : null;
     if (ing && totalG > 0 && !it.optional) {
       for (const s of STORES) {
         const p = priceOf(ing, s.id, overrides);
@@ -58,7 +63,7 @@ export function viewRecipe(recipe, adj = {}, cat, overrides = {}) {
         else missing[s.id].push(ing.name);
       }
     }
-    return { ...it, idx, ingredient: ing, baseG, perG: g1, totalG, qty: q, changed: Math.abs(g1 - baseG) > 0.05 };
+    return { ...it, idx, ingredient: ing, offers, baseG, perG: g1, totalG, qty: q, changed: Math.abs(g1 - baseG) > 0.05 };
   });
   for (const k of MACROS) per[k] = Math.max(0, per[k]);
   const stores = STORES.map((s) => ({ ...s, total: cost[s.id], perServe: cost[s.id] / servings, missing: missing[s.id] }));
@@ -313,3 +318,26 @@ export function readPack(data) {
 }
 
 export const aud = (n) => `$${n.toFixed(2)}`;
+// Small ingredient costs: a pinch of salt shouldn't read as $0.00.
+export const audSmall = (n) => (n == null ? '–' : n > 0 && n < 0.01 ? '<1c' : aud(n));
+
+// Quantities people read: 0.25 of an onion is a quarter of an onion.
+export function fmtAmount(n, unit) {
+  if (n == null) return '';
+  if (['g', 'ml'].includes(unit)) return fmtQty(n);
+  const whole = Math.floor(n + 1e-6);
+  const part = n - whole;
+  const glyph = [[0.125, '⅛'], [0.25, '¼'], [1 / 3, '⅓'], [0.5, '½'], [2 / 3, '⅔'], [0.75, '¾']].find(([v]) => Math.abs(part - v) < 0.03);
+  if (glyph) return `${whole || ''}${glyph[1]}`;
+  return fmtQty(n);
+}
+
+// Opens each store's own search, where the real shelf price is shown.
+export function storeLink(store, query) {
+  const q = encodeURIComponent(query.trim());
+  return {
+    aldi: `https://www.aldi.com.au/results?q=${q}`,
+    coles: `https://www.coles.com.au/search/products?q=${q}`,
+    woolies: `https://www.woolworths.com.au/shop/search/products?searchTerm=${q}`,
+  }[store];
+}

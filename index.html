@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Meals</title>
 <meta name="description" content="Meal ideas, portions, macros and supermarket prices.">
-<meta name="theme-color" content="#f7f3ea" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#16201b" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f4f4f1" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0f100f" media="(prefers-color-scheme: dark)">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Meals">
@@ -14,103 +14,139 @@
 <link rel="apple-touch-icon" href="icon-180.png">
 <link rel="icon" href="icon-192.png">
 <style>
-:root{--bg:#f7f3ea;--card:#fffdf8;--ink:#1e2a24;--mute:#68736b;--line:#e4ddcd;--accent:#2c6a4d;--accent-ink:#fff;--soft:#e4efe6;--hot:#b8462a;--hotsoft:#f8e5dc;--mark:#fbe7a8;--aldi:#23457d;--coles:#d3142b;--woolies:#158544;--shadow:0 1px 2px rgba(40,35,20,.06),0 6px 18px rgba(40,35,20,.06)}
-@media (prefers-color-scheme:dark){:root{--bg:#16201b;--card:#1f2b25;--ink:#eef1ea;--mute:#9dab9f;--line:#334238;--accent:#7cc79f;--accent-ink:#10231a;--soft:#25392e;--hot:#ee9a7c;--hotsoft:#43291f;--mark:#5c4c16;--aldi:#8fb2ea;--coles:#ff8894;--woolies:#6fd59a;--shadow:none}}
+:root{--bg:#f4f4f1;--card:#fff;--ink:#141614;--mute:#6c716c;--faint:#9aa09a;--line:rgba(20,22,20,.1);--accent:#1c7a52;--accent-ink:#fff;--soft:rgba(20,22,20,.055);--hot:#bd4322;--mark:#ffe9a3;--aldi:#1f4aa0;--coles:#d3142b;--woolies:#128044;--bar:rgba(255,255,255,.82);--drawer:cubic-bezier(.32,.72,0,1)}
+@media (prefers-color-scheme:dark){:root{--bg:#0f100f;--card:#1b1d1b;--ink:#f2f3f0;--mute:#9a9f99;--faint:#6f746e;--line:rgba(255,255,255,.1);--accent:#52c793;--accent-ink:#06130c;--soft:rgba(255,255,255,.08);--hot:#f29673;--mark:#5a4a14;--aldi:#7ea6f2;--coles:#ff7d8b;--woolies:#5fd08f;--bar:rgba(27,29,27,.82)}}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html{-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 -apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,sans-serif;overscroll-behavior-y:none;padding-bottom:calc(84px + env(safe-area-inset-bottom))}
-body.detail{padding-bottom:calc(104px + env(safe-area-inset-bottom))}
-#app{max-width:600px;margin:0 auto;padding:calc(14px + env(safe-area-inset-top)) 16px 20px}
-h1{font:700 30px/1.15 ui-serif,"New York",Georgia,serif;letter-spacing:-.01em;margin:6px 0 4px}
-h2{font:700 19px/1.25 ui-serif,"New York",Georgia,serif;margin:0}
-h3{font-size:13px;letter-spacing:.05em;text-transform:uppercase;color:var(--mute);margin:26px 0 8px;font-weight:650}
+html{-webkit-text-size-adjust:100%;background:var(--bg)}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.4 -apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased;overscroll-behavior-y:none;padding-bottom:calc(84px + env(safe-area-inset-bottom))}
+body.detail{padding-bottom:calc(92px + env(safe-area-inset-bottom))}
+#app{max-width:600px;margin:0 auto;padding:calc(18px + env(safe-area-inset-top)) 16px 20px}
+h1{font-size:30px;line-height:1.12;font-weight:700;letter-spacing:-.022em;margin:4px 0 14px}
+h2{font-size:21px;line-height:1.22;font-weight:680;letter-spacing:-.015em;margin:0}
+h3{font-size:13px;font-weight:600;color:var(--mute);margin:26px 0 8px 2px}
 p{margin:0}
-a{color:var(--accent)}
+a{color:var(--accent);text-decoration:none}
 .mute{color:var(--mute)}.small{font-size:13.5px}.num{font-variant-numeric:tabular-nums}
 button,input,textarea,select{font:inherit;color:inherit}
-button{cursor:pointer;background:none;border:0;padding:0;touch-action:manipulation}
+button{cursor:pointer;background:none;border:0;padding:0;touch-action:manipulation;-webkit-user-select:none;user-select:none}
 input,textarea,select{font-size:16px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:100%}
-input:focus-visible,textarea:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:44px;padding:0 16px;border-radius:12px;background:var(--card);border:1px solid var(--line);font-weight:600;transition:transform .12s ease}
-.btn:active{transform:scale(.97)}
-.btn.main{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
-.btn.quiet{border-color:transparent;background:transparent;color:var(--mute)}
+input[type=search]{background:var(--soft);border-color:transparent;-webkit-appearance:none;appearance:none}
+input:focus-visible,textarea:focus-visible,select:focus-visible,button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:46px;padding:0 16px;border-radius:12px;background:var(--soft);font-weight:600;font-size:15.5px;color:var(--ink);transition:transform 160ms ease-out}
+.btn:active,.line:active,.ing:active{transform:scale(.98)}
+.btn[disabled]{opacity:.4}
+.btn.main{background:var(--accent);color:var(--accent-ink)}
+.btn.quiet{background:transparent;color:var(--mute)}
 .btn.wide{width:100%}.row{display:flex;gap:8px;align-items:center}.grow{flex:1;min-width:0}.between{justify-content:space-between}.wrap{flex-wrap:wrap}
-.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:var(--shadow)}
-.seg{display:flex;background:var(--soft);border-radius:12px;padding:3px}
-.seg button{flex:1;min-height:40px;border-radius:9px;font-weight:600;color:var(--mute);font-size:15px}
-.seg button.on{background:var(--card);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.12)}
-.chips{display:flex;gap:7px;overflow-x:auto;scrollbar-width:none;margin:10px -16px 0;padding:2px 16px}
+.card{background:var(--card);border-radius:16px;padding:16px}
+.seg{display:flex;background:var(--soft);border-radius:10px;padding:2px}
+.seg button{flex:1;min-height:34px;border-radius:8px;font-weight:600;color:var(--mute);font-size:14px}
+.seg button.on{background:var(--card);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.14)}
+.chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:12px -16px 0;padding:2px 16px}
 .chips::-webkit-scrollbar{display:none}
-.chip{flex:none;min-height:36px;padding:0 14px;border-radius:18px;border:1px solid var(--line);background:var(--card);font-size:14.5px;font-weight:550}
-.chip.on{background:var(--ink);border-color:var(--ink);color:var(--bg)}
-.macros{display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:6px;margin-top:12px}
-.macro{background:var(--soft);border-radius:11px;padding:8px 9px}
-.macro b{display:block;font-size:19px;line-height:1.2;font-variant-numeric:tabular-nums}
-.macro span{font-size:12px;color:var(--mute)}
-.macro em{display:block;font-style:normal;font-size:11.5px;color:var(--mute)}
+.chip{flex:none;min-height:34px;padding:0 13px;border-radius:17px;background:var(--soft);font-size:14px;font-weight:550;color:var(--mute)}
+.chip.on{background:var(--ink);color:var(--bg)}
+.macros{display:grid;grid-template-columns:1.25fr 1fr 1fr 1fr;margin-top:14px;padding:12px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.macro{min-width:0;padding:0 4px 0 10px;border-left:1px solid var(--line)}
+.macro:first-child{border-left:0;padding-left:0}
+.macro b{display:block;font-size:20px;line-height:1.15;font-weight:680;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+.macro span{display:block;font-size:12px;color:var(--mute);margin-top:2px}
+.macro em{display:block;font-style:normal;font-size:11.5px;color:var(--faint)}
 .macro.over em{color:var(--hot)}
-.meta{display:flex;gap:10px;flex-wrap:wrap;font-size:13.5px;color:var(--mute);margin-top:6px}
-.why{font-size:14px;margin-top:10px;color:var(--mute)}
-.hero{margin-top:14px}
-.hero h2{font-size:24px}
-.line{display:flex;gap:12px;align-items:center;width:100%;text-align:left;padding:13px 0;border-bottom:1px solid var(--line)}
-.line:last-child{border-bottom:0}
-.list{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:0 14px;margin-top:10px}
+.bar{display:block;height:3px;border-radius:2px;background:var(--soft);margin-top:6px;overflow:hidden}
+.bar u{display:block;height:100%;background:var(--accent);border-radius:2px}
+.macro.over .bar u{background:var(--hot)}
+.meta{display:flex;gap:6px 12px;flex-wrap:wrap;font-size:13.5px;color:var(--mute);margin-top:4px}
+.why{font-size:13.5px;margin-top:10px;color:var(--mute)}
+.hero{margin-top:12px}
+.hero .kicker{font-size:12.5px;font-weight:600;color:var(--accent);margin-bottom:3px}
+.line{display:flex;gap:12px;align-items:center;width:100%;text-align:left;padding:12px 0;color:inherit;border-bottom:1px solid var(--line);transition:transform 160ms ease-out}
+.lines>div:last-child .line,.line:last-child{border-bottom:0}
+.line b,.name{font-weight:590}
+.chev{flex:none;color:var(--faint);font-size:18px;line-height:1}
+.list{background:var(--card);border-radius:16px;padding:0 14px;margin-top:8px}
 .tag-hot{color:var(--hot);font-weight:600}
-.stores{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:10px}
-.store{border:1px solid var(--line);border-radius:12px;padding:9px 8px;background:var(--card);min-width:0}
-.store.best{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
-.store b{display:block;font-size:17px;font-variant-numeric:tabular-nums}
-.store small{display:block;font-size:11.5px;color:var(--mute);line-height:1.3}
-.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px;background:var(--c)}
-.step{display:flex;align-items:center;gap:0;flex:none}
-.step button{width:36px;height:36px;border-radius:10px;background:var(--soft);font-size:20px;line-height:1;font-weight:500}
-.step input{width:58px;text-align:center;border:0;background:transparent;padding:6px 0;font-weight:650;font-variant-numeric:tabular-nums;border-radius:8px}
-.ing{display:flex;gap:10px;align-items:center;padding:11px 0;border-bottom:1px solid var(--line)}
+.compare{display:grid;grid-template-columns:repeat(3,1fr);background:var(--card);border-radius:16px;padding:12px 0;margin-top:8px}
+.compare>div{padding:0 12px;border-left:1px solid var(--line);min-width:0}
+.compare>div:first-child{border-left:0}
+.compare b{display:block;font-size:19px;font-weight:680;font-variant-numeric:tabular-nums;margin-top:2px}
+.compare small{display:block;font-size:12px;color:var(--mute);line-height:1.3}
+.compare .low b{color:var(--accent)}
+.dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:5px;background:var(--c);vertical-align:1px}
+.step{display:flex;align-items:center;flex:none}
+.step button{width:40px;height:40px;border-radius:12px;background:var(--soft);font-size:21px;line-height:1;font-weight:450;transition:transform 160ms ease-out}
+.step button:active{transform:scale(.94)}
+.step input{width:72px;text-align:center;border:0;background:transparent;padding:6px 0;font-weight:680;font-size:20px;font-variant-numeric:tabular-nums;border-radius:8px}
+.ing{display:block;width:100%;text-align:left;padding:11px 0;border-bottom:1px solid var(--line);transition:transform 160ms ease-out}
 .ing:last-child{border-bottom:0}
-.ing.chg b{color:var(--accent)}
-.sec{font-size:12.5px;color:var(--mute);font-weight:650;margin:10px 0 0;padding:4px 0}
-ol.steps{list-style:none;padding:0;margin:6px 0 0}
-ol.steps li{display:flex;gap:12px;padding:9px 0}
-ol.steps .n{flex:none;width:26px;height:26px;border-radius:50%;background:var(--soft);font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.ing .top{display:flex;align-items:baseline;gap:10px}
+.ing .amt{flex:none;font-weight:600;font-variant-numeric:tabular-nums}
+.ing.chg .amt{color:var(--accent)}
+.ing .sub{font-size:12.5px;color:var(--mute);margin-top:1px}
+.ing .costs{display:flex;gap:12px;margin-top:4px;font-size:12.5px;color:var(--mute);font-variant-numeric:tabular-nums}
+.ing .costs .low{color:var(--accent);font-weight:620}
+.also{font-size:13.5px;color:var(--mute);padding:11px 0}
+.sec{font-size:12px;color:var(--mute);font-weight:620;padding:12px 0 0}
+.opts{display:grid;grid-template-columns:1fr auto auto;gap:0}
+.offer{display:grid;grid-template-columns:1fr 84px 62px;gap:10px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line)}
+.offer:last-child{border-bottom:0}
+.offer input{padding:7px 8px;font-variant-numeric:tabular-nums;text-align:right}
+.offer input.own{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.offer .used{text-align:right;font-weight:620;font-variant-numeric:tabular-nums}
+.offer-head{display:grid;grid-template-columns:1fr 84px 62px;gap:10px;font-size:11.5px;color:var(--mute);font-weight:600;text-align:right;margin-top:14px}
+.offer-head span:first-child{text-align:left}
+.ext{font-size:12.5px;display:block;margin-top:1px}
+ol.steps{list-style:none;padding:4px 16px;margin:8px 0 0;background:var(--card);border-radius:16px}
+ol.steps li{display:flex;gap:12px;padding:11px 0;border-bottom:1px solid var(--line)}
+ol.steps li:last-child{border-bottom:0}
+ol.steps .n{flex:none;width:20px;font-size:14px;font-weight:680;color:var(--accent);font-variant-numeric:tabular-nums}
 mark{background:var(--mark);color:inherit;border-radius:4px;padding:0 3px}
-.note{background:var(--hotsoft);border-radius:12px;padding:11px 13px;font-size:14px;margin-top:10px}
-.bottom{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);padding:6px 8px calc(6px + env(safe-area-inset-bottom));z-index:20}
+.note{background:var(--soft);border-radius:12px;padding:11px 13px;font-size:14px;margin-top:8px}
+.bottom{position:fixed;left:0;right:0;bottom:0;background:var(--bar);-webkit-backdrop-filter:saturate(180%) blur(18px);backdrop-filter:saturate(180%) blur(18px);border-top:1px solid var(--line);padding:5px 8px calc(5px + env(safe-area-inset-bottom));z-index:20}
 nav.bottom{display:flex;justify-content:center}
-nav.bottom a{flex:1;max-width:120px;text-align:center;text-decoration:none;color:var(--mute);font-size:11.5px;font-weight:600;padding:5px 0;display:flex;flex-direction:column;align-items:center;gap:3px;min-height:48px;position:relative}
+nav.bottom a{flex:1;max-width:120px;text-align:center;color:var(--faint);font-size:11px;font-weight:550;padding:4px 0;display:flex;flex-direction:column;align-items:center;gap:2px;min-height:48px;position:relative}
 nav.bottom a.on{color:var(--accent)}
-nav.bottom svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
-.badge{position:absolute;top:0;left:calc(50% + 8px);background:var(--hot);color:#fff;font-size:10.5px;min-width:17px;height:17px;border-radius:9px;display:flex;align-items:center;justify-content:center;padding:0 4px}
-.actions{display:flex;gap:8px;max-width:600px;margin:0 auto;padding:6px 8px}
-.back{display:inline-flex;align-items:center;min-height:40px;color:var(--accent);font-weight:600;margin-left:-2px}
-#veil{position:fixed;inset:0;background:rgba(20,25,20,.45);z-index:40;opacity:0;pointer-events:none;transition:opacity .2s ease}
+nav.bottom svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.badge{position:absolute;top:0;left:calc(50% + 7px);background:var(--hot);color:#fff;font-size:10.5px;font-weight:650;min-width:16px;height:16px;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:0 4px}
+.actions{display:flex;gap:8px;max-width:600px;margin:0 auto;padding:3px 8px}
+.back{display:inline-flex;align-items:center;min-height:36px;color:var(--accent);font-weight:550;margin-left:-2px}
+#veil{position:fixed;inset:0;background:rgba(0,0,0,.42);z-index:40;opacity:0;pointer-events:none;transition:opacity 240ms ease}
 #veil.on{opacity:1;pointer-events:auto}
-#sheet{position:fixed;left:0;right:0;bottom:0;z-index:41;max-height:90dvh;overflow:auto;background:var(--bg);border-radius:20px 20px 0 0;padding:20px 16px calc(20px + env(safe-area-inset-bottom));transform:translateY(105%);transition:transform .28s cubic-bezier(.2,.8,.2,1);max-width:600px;margin:0 auto}
+#sheet{position:fixed;left:0;right:0;bottom:0;z-index:41;max-height:90dvh;overflow:auto;background:var(--bg);border-radius:18px 18px 0 0;padding:20px 16px calc(20px + env(safe-area-inset-bottom));transform:translateY(100%);transition:transform 300ms var(--drawer);max-width:600px;margin:0 auto}
 #sheet.on{transform:none}
 .stars{display:flex;justify-content:center;gap:6px;margin:16px 0 8px}
-.stars button{font-size:40px;line-height:1;width:52px;height:56px;color:var(--line)}
-.stars button.on{color:#e0a11b}
-.field{display:block;margin-top:12px}.field span{display:block;font-size:13.5px;font-weight:600;margin-bottom:5px}
+.stars button{font-size:40px;line-height:1;width:52px;height:56px;color:var(--soft)}
+.stars button.on{color:#e6a817}
+.field{display:block;margin-top:12px}.field span{display:block;font-size:13px;font-weight:600;margin-bottom:5px;color:var(--mute)}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.check{width:24px;height:24px;flex:none;border-radius:7px;border:2px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--accent-ink)}
+.check{width:24px;height:24px;flex:none;border-radius:50%;border:1.5px solid var(--faint);display:flex;align-items:center;justify-content:center;color:var(--accent-ink);font-size:13px;margin-top:1px}
 .check.on{background:var(--accent);border-color:var(--accent)}
-.done{opacity:.5;text-decoration:line-through}
-.prices{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:8px}
+.done{opacity:.45;text-decoration:line-through}
+.shopline{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--line)}
+.shopline:last-child{border-bottom:0}
+.shopline .right{flex:none;text-align:right}
+.link{font-size:12.5px;color:var(--accent);min-height:28px}
+.storepick{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:12px 0;border-bottom:1px solid var(--line)}
+.storepick:last-child{border-bottom:0}
+.storepick b{font-variant-numeric:tabular-nums;font-weight:680}
+.radio{width:20px;height:20px;border-radius:50%;border:1.5px solid var(--faint);flex:none}
+.storepick.on .radio{border:6px solid var(--accent)}
+.prices{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}
 .prices label{font-size:12px;color:var(--mute);font-weight:600}
-.prices input{padding:7px 8px;margin-top:2px;font-variant-numeric:tabular-nums}
+.prices input{padding:7px 8px;margin-top:3px;font-variant-numeric:tabular-nums}
 .prices input.own{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
 .empty{text-align:center;padding:42px 16px;color:var(--mute)}
-#toast{position:fixed;left:50%;bottom:calc(96px + env(safe-area-inset-bottom));transform:translate(-50%,20px);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:12px;font-size:14.5px;font-weight:600;opacity:0;transition:.2s ease;z-index:50;pointer-events:none;max-width:88%;width:max-content;text-align:center}
+#toast{position:fixed;left:50%;bottom:calc(92px + env(safe-area-inset-bottom));transform:translate(-50%,12px);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:12px;font-size:14px;font-weight:600;opacity:0;transition:opacity 200ms ease,transform 200ms ease;z-index:50;pointer-events:none;max-width:88%;width:max-content;text-align:center}
 #toast.on{opacity:1;transform:translate(-50%,0)}
-#ob{position:fixed;inset:0;background:var(--bg);z-index:60;overflow:auto;padding:calc(30px + env(safe-area-inset-top)) 20px calc(30px + env(safe-area-inset-bottom))}
+#ob{position:fixed;inset:0;background:var(--bg);z-index:60;overflow:auto;padding:calc(34px + env(safe-area-inset-top)) 20px calc(30px + env(safe-area-inset-bottom))}
 #ob>div{max-width:480px;margin:0 auto}
-.pick{display:block;width:100%;text-align:left;padding:16px;border:1.5px solid var(--line);border-radius:14px;background:var(--card);margin-top:10px}
-.pick.on{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
-.pick b{display:block;font-size:17px}
-@media (prefers-reduced-motion:reduce){*{transition:none!important}}
-.card-rate{border-color:var(--accent)}
+.pick{display:block;width:100%;text-align:left;padding:16px;border-radius:14px;background:var(--card);margin-top:10px;box-shadow:inset 0 0 0 1px var(--line)}
+.pick.on{box-shadow:inset 0 0 0 2px var(--accent)}
+.pick b{display:block;font-size:17px;font-weight:620;margin-bottom:2px}
+.stepcount{font-size:13px;color:var(--mute);font-weight:550;margin-bottom:6px}
+.card-rate{margin-top:12px}
 .lines>div{content-visibility:auto;contain-intrinsic-size:auto 66px}
+@media (prefers-reduced-motion:reduce){#sheet,.btn,.line,.ing,.step button,#toast{transition:opacity 150ms ease}.btn:active,.line:active,.ing:active,.step button:active{transform:none}}
 </style>
 </head>
 <body>
@@ -123,7 +159,7 @@ nav.bottom svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width
 <input type="file" id="file" hidden>
 <script type="module">
 import * as C from './core.js';
-const BUILD = 1;
+const BUILD = 2;
 const KS = 'meals.state.v1', KR = 'meals.recipes.v1', KC = 'meals.catalogue.v1';
 const load = (k, d) => { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch { return d; } };
 const save = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); return true; } catch { toast('Could not save on this device'); return false; } };
@@ -146,7 +182,7 @@ const icons = { today: '<path d="M4 12a8 8 0 0 1 16 0H4zM3 15h18M7 19h10"/>', re
 let toastT;
 function toast(msg) { const t = $('#toast'); t.textContent = msg; t.classList.add('on'); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('on'), 2400); }
 function sheet(html) { $('#sheet').innerHTML = html; $('#sheet').classList.add('on'); $('#veil').classList.add('on'); }
-function closeSheet() { $('#sheet').classList.remove('on'); $('#veil').classList.remove('on'); }
+function closeSheet() { openItem = null; $('#sheet').classList.remove('on'); $('#veil').classList.remove('on'); }
 
 const route = () => (location.hash.slice(1) || 'today').split('/');
 function nav() {
@@ -165,15 +201,17 @@ function render() {
   if (r === 'r') renderRecipe(decodeURIComponent(id));
   else ({ today: renderToday, recipes: renderRecipes, shop: renderShop, prices: renderPrices, you: renderYou }[r] || renderToday)();
   scrollTo(0, y);
+  if (openItem != null && r === 'r') paintItem();
 }
-addEventListener('hashchange', render);
+addEventListener('hashchange', () => { closeSheet(); render(); });
 
 const macroTiles = (per, target) => {
   const t = (k, label, unit = 'g') => {
     const over = target && per[k] > target[k] * 1.12;
-    return `<div class="macro ${over ? 'over' : ''}"><b>${Math.round(per[k])}${k === 'kcal' ? '' : unit}</b><span>${label}</span>${target ? `<em>of ${Math.round(target[k])}${k === 'kcal' ? '' : unit}</em>` : ''}</div>`;
+    const pct = target && target[k] ? Math.min(100, (per[k] / target[k]) * 100) : 0;
+    return `<div class="macro ${over ? 'over' : ''}"><b>${Math.round(per[k])}${k === 'kcal' ? '' : unit}</b><span>${label}</span>${target ? `<em>of ${Math.round(target[k])}${k === 'kcal' ? '' : unit}</em><i class="bar"><u style="width:${pct.toFixed(0)}%"></u></i>` : ''}</div>`;
   };
-  return `<div class="macros">${t('kcal', 'calories')}${t('p', 'protein')}${t('c', 'carbs')}${t('f', 'fat')}</div>`;
+  return `<div class="macros">${t('kcal', 'Calories')}${t('p', 'Protein')}${t('c', 'Carbs')}${t('f', 'Fat')}</div>`;
 };
 const macroTarget = () => (st.mode === 'macro' ? C.perMealTarget(st.target) : null);
 const needRecipes = (where) => `<div class="empty"><h2>No recipes yet</h2><p style="margin:8px 0 16px">Load your recipe file to get started. It stays on this device.</p><button class="btn main" data-a="import">Choose recipe file</button>${where === 'you' ? '' : '<p class="small" style="margin-top:14px"><a href="#you">Or add one by hand</a></p>'}</div>`;
@@ -186,23 +224,23 @@ function renderToday() {
   if (!recipes.length) { app.innerHTML = `<h1>What to make</h1>${needRecipes()}`; return; }
   const list = C.suggest(recipes, st.history, cat, st.prices, st.adjust, { mode: st.mode, target: st.target, type: st.type, diet: st.diet, seed: `${new Date().toDateString()}:${st.seed}` });
   const [top, ...rest] = list;
-  const t = macroTarget();
-  const asks = pendingRatings().map((p) => { const r = byId(p.id); return `<div class="card card-rate" style="margin-top:12px"><p>Did you end up making <b>${esc(r.name)}</b>?</p><div class="row" style="margin-top:10px"><button class="btn main grow" data-a="rate" data-id="${esc(r.id)}">Yes, rate it</button><button class="btn grow" data-a="later" data-id="${esc(r.id)}">Not yet</button></div></div>`; }).join('');
+  const t = st.type === 'meal' ? macroTarget() : null;
+  const asks = pendingRatings().map((p) => { const r = byId(p.id); return `<div class="card card-rate"><p>Did you end up making <b>${esc(r.name)}</b>?</p><div class="row" style="margin-top:10px"><button class="btn main grow" data-a="rate" data-id="${esc(r.id)}">Yes, rate it</button><button class="btn grow" data-a="later" data-id="${esc(r.id)}">Not yet</button></div></div>`; }).join('');
   app.innerHTML = `<h1>What to make</h1>${modeSwitch()}
-  ${st.mode === 'macro' ? `<p class="small mute" style="margin-top:8px">Aiming for about ${Math.round(t.kcal)} kcal and ${Math.round(t.p)}g protein a meal. <a href="#you">Change</a></p>` : ''}
+  ${st.mode === 'macro' ? `<p class="small mute" style="margin-top:8px">About ${Math.round(C.perMealTarget(st.target).kcal)} kcal and ${Math.round(C.perMealTarget(st.target).p)}g protein a meal · <a href="#you">Change</a></p>` : ''}
   ${asks}
   <div class="chips">${[['meal', 'Meals'], ['snack', 'Snacks'], ['sweet', 'Sweet']].map(([k, n]) => `<button class="chip ${st.type === k ? 'on' : ''}" data-a="type" data-v="${k}">${n}</button>`).join('')}</div>
-  ${top ? `<article class="card hero"><p class="small tag-hot">Top pick</p><h2><a href="#r/${encodeURIComponent(top.recipe.id)}" style="color:inherit;text-decoration:none">${esc(top.recipe.name)}</a></h2>
+  ${top ? `<article class="card hero"><p class="kicker">Top pick</p><h2><a href="#r/${encodeURIComponent(top.recipe.id)}" style="color:inherit">${esc(top.recipe.name)}</a></h2>
   <div class="meta">${top.recipe.mins ? `<span>${top.recipe.mins} min</span>` : ''}<span>${bestLine(top.view)}</span></div>
   ${macroTiles(top.view.per, t)}
   <p class="why">${top.why.map(esc).join(' · ')}</p>
-  <div class="row" style="margin-top:12px"><a class="btn main grow" href="#r/${encodeURIComponent(top.recipe.id)}" style="text-decoration:none">Open recipe</a><button class="btn" data-a="plan" data-id="${esc(top.recipe.id)}">${inPlan(top.recipe.id) ? 'In plan' : 'Add to plan'}</button></div>
-  <button class="btn quiet wide" data-a="skip" data-id="${esc(top.recipe.id)}">Not this week</button></article>
+  <div class="row" style="margin-top:12px"><a class="btn main grow" href="#r/${encodeURIComponent(top.recipe.id)}">Open recipe</a><button class="btn grow" data-a="plan" data-id="${esc(top.recipe.id)}">${inPlan(top.recipe.id) ? 'In plan' : 'Add to plan'}</button></div>
+  <button class="btn quiet wide" style="margin-bottom:-8px" data-a="skip" data-id="${esc(top.recipe.id)}">Not this week</button></article>
   ${rest.length ? `<h3>Also good right now</h3><div class="list">${rest.slice(0, 6).map(sugRow).join('')}</div><button class="btn wide" style="margin-top:12px" data-a="shuffle">Show different ideas</button>` : ''}`
     : `<div class="empty"><h2>Nothing due</h2><p style="margin-top:6px">Everything here was made recently. Try another type or browse Recipes.</p></div>`}`;
 }
 const inPlan = (id) => st.plan.some((p) => p.id === id);
-const sugRow = (s) => `<a class="line" href="#r/${encodeURIComponent(s.recipe.id)}" style="color:inherit;text-decoration:none"><div class="grow"><b>${esc(s.recipe.name)}</b><div class="meta" style="margin-top:2px"><span class="num">${Math.round(s.view.per.kcal)} kcal · ${Math.round(s.view.per.p)}g protein</span><span class="num">${C.aud(s.view.best.perServe)}</span></div><div class="small mute">${esc(s.why[0])}</div></div></a>`;
+const sugRow = (s) => `<a class="line" href="#r/${encodeURIComponent(s.recipe.id)}"><div class="grow"><b>${esc(s.recipe.name)}</b><div class="meta" style="margin-top:1px"><span class="num">${Math.round(s.view.per.kcal)} kcal · ${Math.round(s.view.per.p)}g protein · ${C.aud(s.view.best.perServe)}</span></div><div class="small mute">${esc(s.why[0])}</div></div><span class="chev" aria-hidden="true">›</span></a>`;
 
 // ---------- Recipes
 const list = { q: '', tag: 'all', sort: 'name' };
@@ -235,13 +273,16 @@ function paintRecipes() {
 const unitLabel = (u) => ({ each: '', g: 'g', ml: 'ml', tbsp: 'tbsp', tsp: 'tsp', cup: 'cup', cups: 'cups', serving: 'serve', servings: 'serves', slice: 'slice', slices: 'slices', packet: 'packet', packets: 'packets', teaspoon: 'tsp', teaspoons: 'tsp', tablespoon: 'tbsp', tablespoons: 'tbsp', kg: 'kg', l: 'L', can: 'can', cans: 'cans' }[u] ?? u);
 const subtitle = (it) => { const m = it.text.match(/\(([^)]*)\)/); return m && !/^\d/.test(m[1]) ? m[1].replace(/^brand:\s*/i, '') : ''; };
 const niceName = (it) => (it.ingredient && !['seasoning', 'herbs'].includes(it.ingredient.id) ? it.ingredient.name : it.name.replace(/^./, (c) => c.toUpperCase()));
+const amountText = (n, unit) => [C.fmtAmount(n, unit), unitLabel(unit)].filter(Boolean).join(' ');
+const ui = { batch: false };
 function ingRow(it, r) {
-  if (it.q == null) return `<div class="ing"><div class="grow small mute">${esc(it.text)}</div></div>`;
-  const qty = (it.q / it.g) * it.perG;
-  const opt = it.optional ? ' · optional' : '';
-  const total = r.servings === 1 && (st.adjust[r.id]?.servings || 1) === 1 ? '' : `${C.fmtQty(it.qty)} ${unitLabel(it.unit)} in total`;
-  const sub = [total, subtitle(it)].filter(Boolean).join(' · ') + opt;
-  return `<div class="ing ${it.changed ? 'chg' : ''}"><div class="grow"><b>${esc(niceName(it))}</b>${sub ? `<div class="small mute">${esc(sub)}</div>` : ''}</div><div class="step"><button data-a="q-" data-i="${it.idx}" aria-label="Less ${esc(niceName(it))}">−</button><input inputmode="decimal" data-q="${it.idx}" value="${C.fmtQty(qty)}" aria-label="${esc(niceName(it))} per ${esc(perWord(r))}, ${esc(unitLabel(it.unit))}"><button data-a="q+" data-i="${it.idx}" aria-label="More ${esc(niceName(it))}">+</button><span class="small mute" style="width:32px;margin-left:2px">${esc(unitLabel(it.unit))}</span></div></div>`;
+  const amount = ui.batch ? it.qty : (it.q / it.g) * it.perG;
+  const key = ui.batch ? 'total' : 'perServe';
+  const priced = it.offers?.filter((o) => o[key] != null) || [];
+  const low = priced.length ? Math.min(...priced.map((o) => o[key])) : null;
+  const costs = it.offers && !it.optional ? `<div class="costs">${it.offers.map((o) => `<span class="${o[key] != null && o[key] === low ? 'low' : ''}">${o.name} ${C.audSmall(o[key])}</span>`).join('')}</div>` : '';
+  const sub = [subtitle(it), it.optional ? 'Optional' : ''].filter(Boolean).join(' · ');
+  return `<button class="ing ${it.changed ? 'chg' : ''}" data-a="item" data-i="${it.idx}" aria-label="Change ${esc(niceName(it))}"><div class="top"><span class="grow name">${esc(niceName(it))}</span><span class="amt">${esc(amountText(amount, it.unit))}</span><span class="chev" aria-hidden="true">›</span></div>${sub ? `<div class="sub">${esc(sub)}</div>` : ''}${costs}</button>`;
 }
 function renderRecipe(id) {
   const r = byId(id);
@@ -252,37 +293,59 @@ function renderRecipe(id) {
   const changed = v.items.some((i) => i.changed);
   const d = Math.round(v.per.kcal - r.kcal);
   const word = perWord(r);
+  const canBatch = v.servings > 1;
+  if (!canBatch) ui.batch = false;
   let sec;
-  const rowsHtml = v.items.map((it) => {
+  const rowsHtml = v.items.filter((it) => it.q != null).map((it) => {
     let h = '';
     if (it.sec && it.sec !== sec) { sec = it.sec; h = `<div class="sec">${esc(/per meal/i.test(sec) ? `In each ${word}` : sec)}</div>`; }
     return h + ingRow(it, r);
   }).join('');
+  const taste = v.items.filter((it) => it.q == null).map((it) => it.text.replace(/\(.*?\)|\(.*$/g, '').trim()).filter(Boolean);
   const missing = v.stores.filter((s) => s.missing.length);
   const steps = r.steps.map((s, i) => { const x = C.stepText(s, v); return `<li><span class="n">${i + (r.firstStep || 1)}</span><div>${esc(x.text).replace(/\u0001/g, '<mark>').replace(/\u0002/g, '</mark>')}</div></li>`; }).join('');
   app.innerHTML = `<button class="back" data-a="back">‹ Back</button>
-  <h1>${esc(r.name)}</h1>
-  <div class="meta">${r.mins ? `<span>${r.mins} min</span>` : ''}${starsOf(id) ? `<span>${starsOf(id)}★ you</span>` : ''}${r.page ? `<span>Book p.${r.page}</span>` : ''}</div>
+  <h1 style="margin-bottom:2px">${esc(r.name)}</h1>
+  <div class="meta">${r.mins ? `<span>${r.mins} min</span>` : ''}${starsOf(id) ? `<span>${starsOf(id)}★</span>` : ''}${r.page ? `<span>Book p.${r.page}</span>` : ''}</div>
   ${macroTiles(v.per, t)}
   <p class="small mute" style="margin-top:7px">Per ${esc(word)}${changed ? ` · <span class="tag-hot">${d > 0 ? '+' : ''}${d} kcal from the recipe</span>` : ''}</p>
-  <div class="row wrap" style="margin-top:12px">
   ${r.servingsGuessed ? `<p class="small mute" style="margin-top:6px">The book doesn't say how many this makes. ${r.servings} is worked out from the ingredients.</p>` : ''}
-  ${t ? '<button class="btn main" data-a="fit">Fit to my macros</button>' : ''}${changed ? '<button class="btn" data-a="reset">Reset portions</button>' : ''}
-  </div>
-  <h3>How much are you making?</h3>
-  <div class="row between card" style="padding:10px 14px"><span><b>${C.fmtQty(v.servings)}</b> ${esc(plural(word, v.servings))}</span><div class="step"><button data-a="s-" aria-label="Fewer">−</button><span style="width:14px"></span><button data-a="s+" aria-label="More">+</button></div></div>
+  ${t || changed ? `<div class="row" style="margin-top:12px">${t ? '<button class="btn main grow" data-a="fit">Fit to my macros</button>' : ''}${changed ? '<button class="btn grow" data-a="reset">Reset portions</button>' : ''}</div>` : ''}
+  <h3>Making</h3>
+  <div class="row between card" style="padding:9px 14px"><span><b class="num" style="font-size:18px">${C.fmtQty(v.servings)}</b> ${esc(plural(word, v.servings))}</span><div class="step"><button data-a="s-" aria-label="Fewer">−</button><span style="width:8px"></span><button data-a="s+" aria-label="More">+</button></div></div>
   <h3>Price per ${esc(word)}</h3>
-  <div class="stores">${v.stores.map((s) => `<div class="store ${s.id === v.best.id ? 'best' : ''}"><small><i class="dot" style="--c:var(--${s.id})"></i>${s.name}</small><b>${C.aud(s.perServe)}</b><small>${s.missing.length ? `${s.missing.length} not stocked` : `${C.aud(s.total)} batch`}</small></div>`).join('')}</div>
-  <p class="small mute" style="margin-top:6px">Estimated, based on the share of each pack used. <a href="#prices">Update prices</a>${missing.length ? '. ' + esc(missing.map((s) => `${s.name} usually won't have ${s.missing.slice(0, 2).join(', ')}${s.missing.length > 2 ? '…' : ''}`).join('. ')) : ''}</p>
-  <h3>Ingredients per ${esc(word)}</h3>
-  <div class="list">${rowsHtml}</div>
+  <div class="compare">${v.stores.map((s) => `<div class="${s.id === v.best.id ? 'low' : ''}"><small><i class="dot" style="--c:var(--${s.id})"></i>${s.name}</small><b>${C.aud(s.perServe)}</b><small>${s.missing.length ? `${s.missing.length} not stocked` : `${C.aud(s.total)} batch`}</small></div>`).join('')}</div>
+  <p class="small mute" style="margin:6px 2px 0">Estimates, based on the share of each pack used.${missing.length ? ' ' + esc(missing.map((s) => `${s.name} usually won't have ${s.missing.slice(0, 2).join(', ')}${s.missing.length > 2 ? '…' : ''}.`).join(' ')) : ''}</p>
+  <div class="row between" style="margin:26px 2px 8px"><h3 style="margin:0">Ingredients</h3>${canBatch ? `<div class="seg" style="width:172px"><button data-a="batch" data-v="0" class="${ui.batch ? '' : 'on'}" style="min-height:28px;font-size:12.5px">Per ${esc(word.length > 7 ? 'serve' : word)}</button><button data-a="batch" data-v="1" class="${ui.batch ? 'on' : ''}" style="min-height:28px;font-size:12.5px">Whole batch</button></div>` : ''}</div>
+  <div class="list">${rowsHtml}${taste.length ? `<div class="also">Also: ${esc(taste.join(', '))}</div>` : ''}</div>
+  <p class="small mute" style="margin:6px 2px 0">Tap an ingredient to change the amount or check its price.</p>
   <h3>Method</h3>
   ${(r.firstStep || 1) > 1 ? `<div class="note">The cookbook only prints from step ${r.firstStep} for this recipe. It points readers to a video for the earlier steps.</div>` : ''}
-  ${changed || v.servings !== r.servings ? '<p class="small mute" style="margin-top:6px">Highlighted amounts follow your portions. Other numbers are as printed.</p>' : ''}
+  ${changed || v.servings !== r.servings ? '<p class="small mute" style="margin:0 2px 6px">Highlighted amounts follow your portions. Other numbers are as printed.</p>' : ''}
   <ol class="steps">${steps}</ol>
-  ${r.notes?.length ? `<h3>Notes</h3>${r.notes.map((n) => `<p class="small mute" style="margin-top:6px">${esc(n)}</p>`).join('')}` : ''}
+  ${r.notes?.length ? `<h3>Notes</h3>${r.notes.map((n) => `<p class="small mute" style="margin:6px 2px 0">${esc(n)}</p>`).join('')}` : ''}
   ${r.own ? `<button class="btn quiet wide" style="margin-top:16px;color:var(--hot)" data-a="del" data-id="${esc(id)}">Delete this recipe</button>` : ''}
   <div class="bottom"><div class="actions"><button class="btn grow" data-a="plan" data-id="${esc(id)}">${inPlan(id) ? 'In plan ✓' : 'Add to plan'}</button><button class="btn main grow" data-a="rate" data-id="${esc(id)}">I made this</button></div></div>`;
+}
+let openItem = null;
+function paintItem() {
+  const id = decodeURIComponent(route()[1]);
+  const r = byId(id);
+  const v = C.viewRecipe(r, adj(id), cat, st.prices);
+  const it = v.items[openItem];
+  const word = perWord(r);
+  const per = (it.q / it.g) * it.perG;
+  const ing = it.ingredient;
+  const m = ing ? ['kcal', 'p', 'c', 'f'].map((k) => Math.round((it.perG * ing[k]) / 100)) : null;
+  const query = ing && !['seasoning', 'herbs'].includes(ing.id) ? ing.name : it.name;
+  const offers = it.offers ? `<div class="offer-head"><span>Store</span><span>Pack price</span><span>Per ${esc(word.length > 7 ? 'serve' : word)}</span></div>
+    <div class="list" style="margin-top:4px">${it.offers.map((o) => `<div class="offer"><div><span class="name"><i class="dot" style="--c:var(--${o.id})"></i>${o.name}</span><a class="ext" href="${esc(C.storeLink(o.id, query))}" target="_blank" rel="noopener">Check price ↗</a></div><input inputmode="decimal" data-p="${esc(ing.id)}" data-s="${o.id}" class="${o.own ? 'own' : ''}" value="${o.pack != null ? o.pack.toFixed(2) : ''}" placeholder="None" aria-label="${o.name} pack price"><span class="used">${C.audSmall(o.perServe)}</span></div>`).join('')}</div>
+    <p class="small mute" style="margin-top:8px">Pack size: ${esc(ing.packLabel)}. Prices are estimates until you type the real one.</p>` : '<p class="small mute" style="margin-top:12px">No price for this one yet.</p>';
+  sheet(`<h2>${esc(niceName(it))}</h2>${it.text ? `<p class="small mute" style="margin-top:3px">${esc(it.text)}</p>` : ''}
+  <div class="row between card" style="margin-top:14px;padding:10px 14px"><span class="small mute">Per ${esc(word)}</span><div class="step"><button data-a="q-" data-i="${it.idx}" aria-label="Less">−</button><input inputmode="decimal" data-q="${it.idx}" value="${C.fmtQty(per)}" aria-label="Amount per ${esc(word)}"><button data-a="q+" data-i="${it.idx}" aria-label="More">+</button><span class="small mute" style="min-width:30px;margin-left:6px">${esc(unitLabel(it.unit))}</span></div></div>
+  ${m ? `<p class="small mute num" style="margin:8px 2px 0">This amount: ${m[0]} kcal · ${m[1]}g protein · ${m[2]}g carbs · ${m[3]}g fat</p>` : ''}
+  ${offers}
+  <button class="btn main wide" style="margin-top:16px" data-a="close">Done</button>`);
 }
 function setAdj(id, patch) {
   const a = { ...adj(id), ...patch };
@@ -322,13 +385,12 @@ function rateSheet(id, stars = 0) {
 function planInfo() { return st.plan.map((p) => ({ p, recipe: byId(p.id), adj: adj(p.id) })).filter((x) => x.recipe); }
 function renderShop() {
   const items = planInfo();
-  if (!items.length) { app.innerHTML = `<h1>Shop</h1><div class="empty"><h2>Your plan is empty</h2><p style="margin:8px 0 16px">Add meals and your shopping list builds itself, with prices for each store.</p><a class="btn main" href="#today" style="text-decoration:none">Find something to make</a></div>`; return; }
+  if (!items.length) { app.innerHTML = `<h1>Shop</h1><div class="empty"><h2>Your plan is empty</h2><p style="margin:8px 0 16px">Add meals and your shopping list builds itself, with prices for each store.</p><a class="btn main" href="#today">Find something to make</a></div>`; return; }
   const have = new Set(st.have);
   const l = C.shoppingList(items, cat, st.prices, have);
   const mode = st.store;
-  const hdr = [...l.totals.map((t) => ({ id: t.id, name: t.name, total: t.total, absent: t.absent })), { id: 'mix', name: 'Cheapest mix', total: l.mix, absent: [] }];
-  const pick = hdr.find((h) => h.id === mode) || hdr[3];
-  const cheapest = Math.min(...l.totals.filter((t) => !t.absent.length).map((t) => t.total));
+  const hdr = [{ id: 'mix', name: 'Cheapest mix', total: l.mix, absent: [] }, ...l.totals.map((t) => ({ id: t.id, name: t.name, total: t.total, absent: t.absent }))];
+  const pick = hdr.find((h) => h.id === mode) || hdr[0];
   const groups = {};
   for (const row of l.buy) (groups[row.ingredient.aisle] ||= []).push(row);
   const lineHtml = (row) => {
@@ -336,16 +398,17 @@ function renderShop() {
     const done = st.checked[row.ingredient.id];
     const others = row.offers.filter((x) => x.store !== o?.store && x.cost != null).map((x) => `${x.name} ${C.aud(x.cost)}`).join(' · ');
     const costHtml = o?.cost != null ? `<b class="num">${C.aud(o.cost)}</b>` : `<span class="small tag-hot">Not at ${esc(pick.name)}</span>`;
-    return `<div class="ing"><button class="check ${done ? 'on' : ''}" data-a="tick" data-v="${row.ingredient.id}" aria-label="Got ${esc(row.ingredient.name)}" aria-pressed="${!!done}">${done ? '✓' : ''}</button><div class="grow ${done ? 'done' : ''}"><b>${esc(row.ingredient.name)}</b><div class="small mute">${row.packs > 1 ? `${row.packs} × ` : ''}${esc(row.ingredient.packLabel)} · need ${kg(row.g)}${o?.cost != null && mode === 'mix' ? ` · ${esc(o.name)}` : ''}</div>${others ? `<div class="small mute num">${esc(others)}</div>` : ''}<button class="small" style="color:var(--accent);min-height:30px" data-a="home" data-v="${row.ingredient.id}">Already have it</button></div>${costHtml}</div>`;
+    return `<div class="shopline"><button class="check ${done ? 'on' : ''}" data-a="tick" data-v="${row.ingredient.id}" aria-label="Got ${esc(row.ingredient.name)}" aria-pressed="${!!done}">${done ? '✓' : ''}</button><div class="grow ${done ? 'done' : ''}"><span class="name">${esc(row.ingredient.name)}</span><div class="small mute">${row.packs > 1 ? `${row.packs} × ` : ''}${esc(row.ingredient.packLabel)} · need ${kg(row.g)}${o?.cost != null && mode === 'mix' ? ` · ${esc(o.name)}` : ''}</div>${others ? `<div class="small mute num">${esc(others)}</div>` : ''}</div><div class="right">${costHtml}<div><button class="link" data-a="home" data-v="${row.ingredient.id}">Have it</button></div></div></div>`;
   };
   app.innerHTML = `<h1>Shop</h1>
-  <div class="list">${items.map(({ recipe, adj: a }) => { const v = C.viewRecipe(recipe, a, cat, st.prices); return `<div class="line"><a class="grow" href="#r/${encodeURIComponent(recipe.id)}" style="color:inherit;text-decoration:none"><b>${esc(recipe.name)}</b><div class="small mute num">${C.fmtQty(v.servings)} ${esc(plural(perWord(recipe), v.servings))} · ${Math.round(v.per.kcal)} kcal each</div></a><button class="btn quiet" data-a="unplan" data-id="${esc(recipe.id)}" aria-label="Remove ${esc(recipe.name)}">Remove</button></div>`; }).join('')}</div>
+  <h3 style="margin-top:0">This plan</h3>
+  <div class="list">${items.map(({ recipe, adj: a }) => { const v = C.viewRecipe(recipe, a, cat, st.prices); return `<div class="line"><a class="grow" href="#r/${encodeURIComponent(recipe.id)}" style="color:inherit"><b>${esc(recipe.name)}</b><div class="small mute num">${C.fmtQty(v.servings)} ${esc(plural(perWord(recipe), v.servings))} · ${Math.round(v.per.kcal)} kcal each</div></a><button class="link" data-a="unplan" data-id="${esc(recipe.id)}" aria-label="Remove ${esc(recipe.name)}">Remove</button></div>`; }).join('')}</div>
   <h3>Where to buy</h3>
-  <div class="stores" style="grid-template-columns:repeat(4,1fr)">${hdr.map((h) => `<button class="store ${h.id === pick.id ? 'best' : ''}" style="text-align:left" data-a="store" data-v="${h.id}" aria-pressed="${h.id === pick.id}"><small>${h.id === 'mix' ? '' : `<i class="dot" style="--c:var(--${h.id})"></i>`}${h.name}</small><b>${C.aud(h.total)}</b>${h.absent.length ? `<small>+${h.absent.length} elsewhere</small>` : h.id !== 'mix' && h.total === cheapest && l.totals.filter((t) => !t.absent.length && t.total === cheapest).length === 1 ? '<small>Lowest</small>' : '<small>&nbsp;</small>'}</button>`).join('')}</div>
-  <p class="small mute" style="margin-top:6px">Whole packs at estimated prices. Actual shelf prices and specials will differ.</p>
+  <div class="list">${hdr.map((h) => `<button class="storepick ${h.id === pick.id ? 'on' : ''}" data-a="store" data-v="${h.id}" aria-pressed="${h.id === pick.id}"><span class="radio"></span><span class="grow">${h.id === 'mix' ? '' : `<i class="dot" style="--c:var(--${h.id})"></i>`}${h.name}${h.absent.length ? ` <span class="small mute">· ${h.absent.length} not stocked</span>` : ''}</span><b>${C.aud(h.total)}</b></button>`).join('')}</div>
+  <p class="small mute" style="margin:6px 2px 0">Whole packs at estimated prices. Shelf prices and specials will differ.</p>
   ${Object.entries(groups).map(([a, rs]) => `<h3>${esc(a)}</h3><div class="list">${rs.map(lineHtml).join('')}</div>`).join('')}
-  ${l.toTaste.length ? `<h3>Check the cupboard</h3><p class="small mute">${esc(l.toTaste.map((x) => x.name).join(', '))}</p>` : ''}
-  ${l.owned.length ? `<h3>Already at home</h3><div class="list">${l.owned.map((r) => `<div class="line"><div class="grow">${esc(r.ingredient.name)}<div class="small mute">Using ${kg(r.g)}</div></div><button class="btn quiet" data-a="home" data-v="${r.ingredient.id}">Need it</button></div>`).join('')}</div>` : ''}
+  ${l.toTaste.length ? `<h3>Check the cupboard</h3><p class="small mute" style="margin:0 2px">${esc(l.toTaste.map((x) => x.name).join(', '))}</p>` : ''}
+  ${l.owned.length ? `<h3>Already at home</h3><div class="list">${l.owned.map((r) => `<div class="line"><div class="grow">${esc(r.ingredient.name)}<div class="small mute">Using ${kg(r.g)}</div></div><button class="link" data-a="home" data-v="${r.ingredient.id}">Need it</button></div>`).join('')}</div>` : ''}
   <div class="row" style="margin-top:16px"><button class="btn grow" data-a="copy">Copy list</button><button class="btn grow" data-a="clearticks">Clear ticks</button></div>`;
   window.__list = l;
 }
@@ -359,7 +422,7 @@ function renderPrices() {
 }
 function paintPrices() {
   const q = pq.q.trim().toLowerCase();
-  $('#pres').innerHTML = rows.filter((r) => r.id !== 'water' && (!q || r.name.toLowerCase().includes(q) || r.aisle.toLowerCase().includes(q))).map((r) => `<div class="card" style="margin-bottom:8px;padding:12px 14px"><b>${esc(r.name)}</b> <span class="small mute">${esc(r.packLabel)}</span><div class="prices">${C.STORES.map((s) => { const p = C.priceOf(r, s.id, st.prices); return `<label>${s.name}<input inputmode="decimal" data-p="${r.id}" data-s="${s.id}" class="${p?.own ? 'own' : ''}" value="${p ? p.price.toFixed(2) : ''}" placeholder="None"></label>`; }).join('')}</div></div>`).join('');
+  $('#pres').innerHTML = rows.filter((r) => r.id !== 'water' && (!q || r.name.toLowerCase().includes(q) || r.aisle.toLowerCase().includes(q))).map((r) => `<div><div class="card" style="margin-bottom:8px;padding:12px 14px"><span class="name">${esc(r.name)}</span> <span class="small mute">${esc(r.packLabel)}</span><div class="prices">${C.STORES.map((s) => { const p = C.priceOf(r, s.id, st.prices); return `<div><label>${s.name}<input inputmode="decimal" data-p="${r.id}" data-s="${s.id}" class="${p?.own ? 'own' : ''}" value="${p ? p.price.toFixed(2) : ''}" placeholder="None"></label><a class="ext" href="${esc(C.storeLink(s.id, r.name))}" target="_blank" rel="noopener">Check ↗</a></div>`; }).join('')}</div></div></div>`).join('');
 }
 
 // ---------- You
@@ -433,7 +496,8 @@ function renderOb() {
     load: `<h1>${recipes.length ? 'All set' : 'Add your recipes'}</h1><p class="mute">${recipes.length ? `${recipes.length} recipes are ready.` : 'Choose your recipe file. It stays on this device and is never uploaded.'}</p>
     ${recipes.length ? '' : '<button class="btn wide" style="margin-top:16px" data-a="import">Choose recipe file</button>'}${foot('ob-done', recipes.length ? 'Start' : 'Do this later')}`,
   };
-  el.innerHTML = `<div>${pages[ob]}</div>`;
+  const order = st.mode === 'macro' ? ['style', 'target', 'diet', 'load'] : ['style', 'diet', 'load'];
+  el.innerHTML = `<div><p class="stepcount">Step ${order.indexOf(ob) + 1} of ${order.length}</p>${pages[ob]}</div>`;
 }
 
 // ---------- Actions
@@ -464,6 +528,8 @@ $('#file').addEventListener('change', async (e) => {
 });
 const A = {
   close: closeSheet,
+  item: (e) => { openItem = +e.dataset.i; paintItem(); },
+  batch: (e) => { ui.batch = e.dataset.v === '1'; render(); },
   back: () => { if (history.length > 1) history.back(); else location.hash = '#today'; },
   mode: (e) => { st.mode = e.dataset.v; persist(); render(); },
   type: (e) => { st.type = e.dataset.v; persist(); render(); },
@@ -524,8 +590,8 @@ document.addEventListener('change', (e) => {
   if (t.dataset.t) { const v = parseFloat(t.value); if (Number.isFinite(v) && v > 0) { st.target[t.dataset.t] = v; persist(); } else t.value = st.target[t.dataset.t]; }
   if (t.dataset.p) {
     const id = t.dataset.p, s = t.dataset.s, v = parseFloat(t.value);
-    if (Number.isFinite(v) && v >= 0) { ((st.prices[id] ||= {})[s] = { price: v, at: Date.now() }); t.classList.add('own'); t.value = v.toFixed(2); persist(); toast('Price saved'); }
-    else if (t.value.trim() === '') { if (st.prices[id]) delete st.prices[id][s]; persist(); const p = C.priceOf(cat.get(id), s, st.prices); t.value = p ? p.price.toFixed(2) : ''; t.classList.remove('own'); }
+    if (Number.isFinite(v) && v >= 0) { ((st.prices[id] ||= {})[s] = { price: v, at: Date.now() }); t.classList.add('own'); t.value = v.toFixed(2); persist(); toast('Price saved'); if (route()[0] === 'r') render(); }
+    else if (t.value.trim() === '') { if (st.prices[id]) delete st.prices[id][s]; persist(); const p = C.priceOf(cat.get(id), s, st.prices); t.value = p ? p.price.toFixed(2) : ''; t.classList.remove('own'); if (route()[0] === 'r') render(); }
   }
 });
 window.__meals = { st, get recipes() { return recipes; }, set recipes(v) { recipes = v; save(KR, recipes); render(); } };
