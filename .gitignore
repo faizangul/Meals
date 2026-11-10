@@ -1,0 +1,6 @@
+# Book-derived recipes never go in the repo
+private/
+*recipes-pack*.json
+meals-backup-*.json
+node_modules/
+.DS_Store

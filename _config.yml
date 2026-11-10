@@ -1,0 +1,1 @@
+exclude: [tools, tests, private, package.json, CLAUDE.md, README.md]
